@@ -361,7 +361,7 @@ CatanMap.prototype.generate = function() {
                         newHexTile,
                         newCoords
                     );
-                    invalid = this.doesFormTriangle(newHexTile) || this.doesFormChain(newHexTile);
+                    invalid = this.doesFormTriangle(newHexTile) || this.doesFormChain(newHexTile) || this.hasSameNumberedNeighbour(newHexTile);
 
 					if( invalid ) {
 						if( tileCoordinates.length === 0 ) {
@@ -438,6 +438,16 @@ CatanMap.prototype.hasHighlyProductiveNeighbors = function(tile) {
 	var adjacentTiles = this.getAdjacentTiles(tile);
 	for (var i = 0; i < adjacentTiles.length; i += 1) {
 		if ( adjacentTiles[i].isHighlyProductive() ) {
+			return true;
+		}
+	}
+	return false;
+}
+
+CatanMap.prototype.hasSameNumberedNeighbour = function(tile) {
+	var adjacentTiles = this.getAdjacentTiles(tile);
+	for (var i = 0; i < adjacentTiles.length; i += 1) {
+		if ( tile.number === adjacentTiles[i].number ) {
 			return true;
 		}
 	}
